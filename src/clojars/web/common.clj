@@ -45,8 +45,8 @@
                    (image "/images/red-hat-logo.svg" "Red Hat, Inc."))]
          [:td.sponsor
           (link-to {:target "_blank"}
-                   "http://yellerapp.com/"
-                   (image "/images/yeller-logo.png" "Yeller"))]
+                   "http://fastly.com/"
+                   (image "/images/fastly-logo.png" "Fastly"))]
          [:td.sponsor
           (link-to {:target "_blank"}
                    "https://dnsimple.link/resolving-clojars"
