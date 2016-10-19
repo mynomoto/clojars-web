@@ -27,7 +27,11 @@ LIMIT 1;
 --name: find-groupnames
 SELECT name
 FROM groups
-WHERE user = :username;
+WHERE (
+      user = :username
+      AND
+      deleted != 1
+);
 
 --name: group-membernames
 SELECT user
@@ -35,7 +39,35 @@ FROM groups
 WHERE (
       name = :groupname
       AND
-      deleted = false
+      deleted != 1
+);
+
+--name: group-member
+SELECT *
+FROM groups
+WHERE (
+      user = :username
+      AND
+      name = :groupname
+)
+LIMIT 1;
+
+--name: delete-member!
+UPDATE groups
+SET deleted = 1
+WHERE (
+      user = :username
+      AND
+      name = :groupname
+);
+
+--name: undelete-member!
+UPDATE groups
+SET deleted = 0
+WHERE (
+      user = :username
+      AND
+      name = :groupname
 );
 
 --name: jars-by-username
