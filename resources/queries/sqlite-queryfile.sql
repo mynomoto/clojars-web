@@ -32,7 +32,11 @@ WHERE user = :username;
 --name: group-membernames
 SELECT user
 FROM groups
-WHERE name = :groupname;
+WHERE (
+      name = :groupname
+      AND
+      deleted = false
+);
 
 --name: jars-by-username
 SELECT j.*
