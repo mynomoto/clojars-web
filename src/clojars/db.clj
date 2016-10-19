@@ -238,11 +238,19 @@
     reset-code))
 
 (defn add-member [db groupname username added-by]
-  (serialize-task :add-member
-                  (sql/add-member! {:groupname groupname
-                                    :username username
-                                    :added_by added-by}
-                                   {:connection db})))
+  (if (serialize-task :group-member
+                      (sql/group-member {:groupname groupname
+                                         :username username}
+                                        {:connection db}))
+    (serialize-task :undelete-member
+                    (sql/undelete-member! {:groupname groupname
+                                           :username username}
+                                          {:connection db}))
+    (serialize-task :add-member
+                    (sql/add-member! {:groupname groupname
+                                      :username username
+                                      :added_by added-by}
+                                     {:connection db}))))
 
 (defn check-group
   "Throws if the group is invalid or not accessible to the account"
